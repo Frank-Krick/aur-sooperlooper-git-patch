@@ -49,3 +49,4 @@ index 16e22e4..cc91b20 100644
    cd "${srcdir}/${_pkgname}"
    make DESTDIR="${pkgdir}" install
    install -vDm 644 *.desktop -t "${pkgdir}/usr/share/applications/"
++++ b/fix_build_error.arch.patch
