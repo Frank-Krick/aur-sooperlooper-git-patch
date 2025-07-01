@@ -1,0 +1,51 @@
+diff --git a/PKGBUILD b/PKGBUILD
+index 16e22e4..cc91b20 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -16,7 +16,7 @@ url="http://essej.net/sooperlooper/"
+ license=('GPL2')
+ depends=('gcc-libs' 'glibc' 'libsigc++' 'wxgtk3')
+ makedepends=('alsa-lib' 'autoconf-archive' 'gendesk' 'git' 'imagemagick'
+-'jack' 'liblo' 'libsamplerate' 'libsndfile' 'libxml2' 'ncurses' 'rubberband')
++  'jack' 'liblo' 'libsamplerate' 'libsndfile' 'libxml2' 'ncurses' 'rubberband')
+ provides=('sooperlooper')
+ conflicts=('sooperlooper')
+ source=("git+https://github.com/essej/sooperlooper.git")
+@@ -29,6 +29,7 @@ pkgver() {
+ 
+ prepare() {
+   cd "${srcdir}/${_pkgname}"
++  git apply ../../fix_build_error.arch.patch
+   ./autogen.sh
+   convert doc/html/sl_web_logo_black.png \
+     -resize 128x128\> \
+@@ -36,13 +37,13 @@ prepare() {
+     -gravity center \
+     -composite net.essej.sooperlooper.png
+   gendesk -n \
+-          --pkgname "net.essej.sooperlooper" \
+-          --name "SooperLooper" \
+-          --pkgdesc "Live Looping Sampler" \
+-          --exec "slgui" \
+-          --icon "net.essej.sooperlooper" \
+-          --genericname "Live Looping Sampler" \
+-          --categories "AudioVideo;Audio;"
++    --pkgname "net.essej.sooperlooper" \
++    --name "SooperLooper" \
++    --pkgdesc "Live Looping Sampler" \
++    --exec "slgui" \
++    --icon "net.essej.sooperlooper" \
++    --genericname "Live Looping Sampler" \
++    --categories "AudioVideo;Audio;"
+ }
+ 
+ build() {
+@@ -53,7 +54,7 @@ build() {
+ 
+ package() {
+   depends+=('libasound.so' 'libjack.so' 'liblo.so' 'libncursesw.so'
+-  'librubberband.so' 'libsamplerate.so' 'libsndfile.so')
++    'librubberband.so' 'libsamplerate.so' 'libsndfile.so')
+   cd "${srcdir}/${_pkgname}"
+   make DESTDIR="${pkgdir}" install
+   install -vDm 644 *.desktop -t "${pkgdir}/usr/share/applications/"
